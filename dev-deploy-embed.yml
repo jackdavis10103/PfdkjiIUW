@@ -5,7 +5,6 @@ name: Deploy DEV EMBED
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  workflow_dispatch:
   push:
     branches:
       - next
@@ -53,7 +52,6 @@ jobs:
         run: CI='' npm run build:dev
 
       - name: Deploy EMBED to DEV
-        uses: nwtgck/actions-netlify@v1.2
         with:
           publish-dir: libs/embed/dist
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -62,9 +60,6 @@ jobs:
           alias: dev
           github-deployment-environment: development
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: 22682666-3a8d-40be-af26-017bfadf5ae9
-        timeout-minutes: 1
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
